@@ -1,6 +1,0 @@
-record(lsi, "$(user):streamdevice:version") {
-    field(DTYP, "streamdevice version")
-    field(DESC, "Version string")
-    field(SIZV, "$(SIZV=200)")
-    field(PINI, "YES")
-}
