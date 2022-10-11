@@ -1,0 +1,35 @@
+#!../../bin/linux-x86_64/streamdevice
+
+#- You may have to change streamdevice to something else
+#- everywhere it appears in this file
+
+< envPaths
+
+cd "${TOP}"
+
+## Register all support components
+dbLoadDatabase "${TOP}/dbd/streamdevice.dbd"
+streamdevice_registerRecordDeviceDriver pdbbase
+
+
+epicsEnvSet ("STREAM_PROTOCOL_PATH", "${TOP}/streamdeviceApp/Db")
+epicsEnvSet ("PREFIX", "SSRL:A33600S:")
+epicsEnvSet ("PORT", "usbtmc1")
+
+## Load record instances
+drvAsynIPPortConfigure("usbtmc1","192.168.0.22:5025",0,0,0)
+asynOctetSetInputEos("usbtmc1",0,"\n")
+asynOctetSetOutputEos("usbtmc1",0,"\n")
+
+
+dbLoadRecords("${TOP}/streamdeviceApp/Db/A33600S.db","P=$(PREFIX),PORT=usbtmc1,M=m1,N=1")
+dbLoadRecords("${TOP}/streamdeviceApp/Db/A33600S.db","P=$(PREFIX),PORT=usbtmc1,M=m2,N=2")
+
+dbLoadRecords("$(ASYN)/db/asynRecord.db", "P=$(PREFIX),R=asyn1,PORT=usbtmc1,ADDR=0,IMAX=80,OMAX=80")
+asynSetTraceIOMask("usbtmc1",0,2)
+asynSetTraceMask("usbtmc1",0,9)
+
+cd "${TOP}/iocBoot/${IOC}"
+iocInit
+
+

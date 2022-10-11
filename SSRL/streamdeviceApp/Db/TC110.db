@@ -1,0 +1,14 @@
+
+
+
+#309 Actual rotation speed
+record(longin,"$(P)readActualSpdHz")
+	{
+		field(DESC,"Actual Speed")
+		field(DTYP,"stream")
+		field(INP,"@TC110.proto readActualSpdHz $(PORT)")
+		field(EGU, "Hz")
+		field(SCAN, "1 second")
+	}	
+
+

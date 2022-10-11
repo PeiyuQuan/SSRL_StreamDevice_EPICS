@@ -1,0 +1,4 @@
+
+#309 Actual rotation speed
+readActualSpdHz {out "1230030902=?%+<sum8>"; in "1231030906%6.6d%+<sum8>";}
+
